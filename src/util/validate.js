@@ -1,4 +1,4 @@
-import { LOTTO_CONFIG } from "../constant/lotto";
+import { LOTTO_CONFIG } from "../constant/lotto.js";
 
 export const validate = {
     isNumber(input) {

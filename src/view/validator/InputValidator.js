@@ -21,4 +21,18 @@ export const InputValidator = {
 
     return input;
   },
+
+  validateWinningNumbers(numbers) {
+     if (!validate.hasValidCount(numbers)) {
+      throw new Error(ERROR_MESSAGE.INVALID_COUNT);
+    }
+    if (!validate.areNumbersInRange(numbers)) {
+      throw new Error(ERROR_MESSAGE.OUT_OF_RANGE);
+    }
+    if (validate.hasDuplicate(numbers)) {
+      throw new Error(ERROR_MESSAGE.DUPLICATE_NUMBER);
+    }
+   
+    return numbers;
+  },
 };
