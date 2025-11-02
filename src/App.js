@@ -8,12 +8,14 @@ import { parseLottoNumbers } from "./util/parser.js";
 class App {
   async run() {
     const purchaseAmount = await this.#inputPurchaseAmount();
-
     const lottoMachine = new LottoMachine(Number(purchaseAmount));
     this.#outputMessages(lottoMachine);
 
     const winningNumbers = await this.#inputWinningNumbers();
     const bonusNumber = await this.#inputBonusNumber();
+
+    const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
+    outputView.printResult(result);
   }
 
   async #inputPurchaseAmount() {
