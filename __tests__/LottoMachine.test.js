@@ -92,13 +92,27 @@ describe('LottoMachine 테스트', () => {
     expect(yieldRate).toBe('100000000.0');
   });
 
-  test('여러 당첨금 합산 시에도 소수점 반올림이 올바르게 처리되는지 확인한다.', () => {
-    const purchaseAmount = 10000;
+  test('소수점 둘째 자리에서 반올림하여 첫째 자리까지 표시되는지 확인한다.', () => {
+    const purchaseAmount = 3000;
     const lottoMachine = new LottoMachine(purchaseAmount);
 
-    lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 4, 5, 6]); // 1등 2,000,000,000
-    lottoMachine.getLottos()[1] = new Lotto([1, 2, 3, 4, 5, 7]); // 2등 30,000,000
-    lottoMachine.getLottos()[2] = new Lotto([1, 2, 3, 4, 5, 8]); // 3등 1,500,000
+    lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 10, 11, 12]);
+    lottoMachine.getLottos()[1] = new Lotto([1, 2, 3, 4, 13, 14]);  
+    lottoMachine.getLottos()[2] = new Lotto([7, 8, 9, 10, 11, 12]); 
+
+    const result = lottoMachine.calculateResult([1, 2, 3, 4, 5, 6], 7);
+    const yieldRate = lottoMachine.calculateYield(result);
+
+    expect(yieldRate).toBe('1833.3');
+  });
+
+  test('여러 당첨금 합산 시에도 소수점 반올림이 올바르게 처리되는지 확인한다.', () => {
+    const purchaseAmount = 3000;
+    const lottoMachine = new LottoMachine(purchaseAmount);
+
+    lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 10, 11, 12]); 
+    lottoMachine.getLottos()[1] = new Lotto([1, 2, 3, 4, 13, 14]);  
+    lottoMachine.getLottos()[2] = new Lotto([1, 2, 3, 4, 5, 12]);  
 
     const winningNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 7;
@@ -106,7 +120,7 @@ describe('LottoMachine 테스트', () => {
     const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
     const yieldRate = lottoMachine.calculateYield(result);
 
-    expect(yieldRate).toBe('20315000.0');
+    expect(yieldRate).toBe('51833.3');
   });
 });
 
