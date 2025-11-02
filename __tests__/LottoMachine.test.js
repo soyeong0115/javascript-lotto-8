@@ -7,16 +7,14 @@ describe('LottoMachine 테스트', () => {
     const purchaseAmount = 8000;
     const lottoMachine = new LottoMachine(purchaseAmount);
 
-    // 계산된 수량이 올바른지
     expect(lottoMachine.getLottoCount()).toBe(
       Math.floor(purchaseAmount / LOTTO_CONFIG.LOTTO_PRICE)
     );
 
-    // 실제 발행된 로또 배열 길이가 수량과 같은지
     expect(lottoMachine.getLottos().length).toBe(lottoMachine.getLottoCount());
   });
 
-  test('발행된 각 로또는 Lotto 인스턴스인지 확인한다.', () => {
+  test('발행된 각 로또가 Lotto 인스턴스인지 확인한다.', () => {
     const purchaseAmount = 3000;
     const lottoMachine = new LottoMachine(purchaseAmount);
     const lottos = lottoMachine.getLottos();
@@ -65,4 +63,51 @@ describe('LottoMachine 테스트', () => {
     expect(result.FOURTH).toBe(1);
     expect(result.FIFTH).toBe(1);
   });
+
+  test('수익률 계산이 정확하게 이루어지는지 확인한다.', () => {
+    const purchaseAmount = 1000;
+    const lottoMachine = new LottoMachine(purchaseAmount);
+
+    lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 7, 8, 9]);
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 10;
+
+    const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
+    const yieldRate = lottoMachine.calculateYield(result);
+
+    expect(yieldRate).toBe('500.0');
+  });
+
+  test('소수점 둘째 자리에서 반올림하여 첫째 자리까지 표시되는지 확인한다.', () => {
+    const purchaseAmount = 2000;
+    const lottoMachine = new LottoMachine(purchaseAmount);
+
+    lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 4, 5, 6]);
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
+
+    const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
+    const yieldRate = lottoMachine.calculateYield(result);
+
+    expect(yieldRate).toBe('100000000.0');
+  });
+
+  test('여러 당첨금 합산 시에도 소수점 반올림이 올바르게 처리되는지 확인한다.', () => {
+    const purchaseAmount = 10000;
+    const lottoMachine = new LottoMachine(purchaseAmount);
+
+    lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 4, 5, 6]); // 1등 2,000,000,000
+    lottoMachine.getLottos()[1] = new Lotto([1, 2, 3, 4, 5, 7]); // 2등 30,000,000
+    lottoMachine.getLottos()[2] = new Lotto([1, 2, 3, 4, 5, 8]); // 3등 1,500,000
+
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const bonusNumber = 7;
+
+    const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
+    const yieldRate = lottoMachine.calculateYield(result);
+
+    expect(yieldRate).toBe('20315000.0');
+  });
 });
+
+
