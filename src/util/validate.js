@@ -1,3 +1,5 @@
+import { LOTTO_CONFIG } from "../constant/lotto";
+
 export const validate = {
     isNumber(input) {
         const number = Number(input);
@@ -18,7 +20,20 @@ export const validate = {
         return number > 0;
     },
 
-    isDuplicate(input) {
-        return new Set(input).size !== input.length;
+    hasDuplicate(numbers) {
+        return new Set(numbers).size !== numbers.length;
     },
+
+    hasValidCount(numbers) {
+        return numbers.length === LOTTO_CONFIG.RANDOM_COUNT;
+    },
+
+    areNumbersInRange(numbers) {
+        const isValidNumber = (num) => 
+            Number.isInteger(num) &&
+            num >= LOTTO_CONFIG.RANDOM_MIN &&
+            num <= LOTTO_CONFIG.RANDOM_MAX;
+
+        return numbers.every(isValidNumber);
+    }
 };
