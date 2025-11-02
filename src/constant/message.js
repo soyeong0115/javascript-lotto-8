@@ -6,11 +6,10 @@ export const INPUT_MESSAGE = Object.freeze({
 
 export const OUTPUT_MESSAGE = Object.freeze({
     WINNING_STATISTICS: '\n당첨 통계\n---',
-    TOTAL_YIELD: rate => `총 수익률은 ${rate}%입니다.`,
 });
 
 export const ERROR_MESSAGE = Object.freeze({
-    EMPTY_INPUT: '[ERROR] 구입금액을 입력해야 합니다.',
+    EMPTY_INPUT: '[ERROR] 입력값을 입력해 주세요.',
     NOT_NUMBER: '[ERROR] 숫자를 입력해야 합니다.',
     NOT_INTEGER: '[ERROR] 정수를 입력해야 합니다.',
     NOT_POSITIVE: '[ERROR] 양수를 입력해야 합니다.',

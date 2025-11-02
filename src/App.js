@@ -15,7 +15,8 @@ class App {
     const bonusNumber = await this.#inputBonusNumber();
 
     const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
-    outputView.printResult(result);
+    const yieldRate = lottoMachine.calculateYield(result);
+    outputView.printResult(result, yieldRate);
   }
 
   async #inputPurchaseAmount() {
