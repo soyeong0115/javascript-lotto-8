@@ -22,6 +22,10 @@ const outputView = {
         Console.print(`6개 일치 (2,000,000,000원) - ${result.FIRST}개`);
 
         Console.print(`총 수익률은 ${yieldRate}%입니다.`);
+    },
+
+    printError(message) {
+        Console.print(message);
     }
 };
 

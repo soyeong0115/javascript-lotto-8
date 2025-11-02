@@ -12,6 +12,7 @@ class App {
     this.#outputMessages(lottoMachine);
 
     const winningNumbers = await this.#inputWinningNumbers();
+
     const bonusNumber = await this.#inputBonusNumber();
 
     const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
@@ -20,22 +21,40 @@ class App {
   }
 
   async #inputPurchaseAmount() {
-    const purchaseAmount = await inputView.readLineMessage(INPUT_MESSAGE.PURCHASE_AMOUNT);
-    InputValidator.validatePurchaseAmount(purchaseAmount);
-    return purchaseAmount;
+    while (true) {
+      try {
+        const purchaseAmount = await inputView.readLineMessage(INPUT_MESSAGE.PURCHASE_AMOUNT);
+        InputValidator.validatePurchaseAmount(purchaseAmount);
+        return purchaseAmount;
+      } catch (error) {
+        outputView.printError(error.message);
+      }
+    }
   }
 
   async #inputWinningNumbers() {
-    const input = await inputView.readLineMessage(INPUT_MESSAGE.WINNING_NUMBERS);
-    const winningNumbers = parseLottoNumbers(input);
-    InputValidator.validateWinningNumbers(winningNumbers);
-    return winningNumbers;
+    while (true) {
+      try {
+        const input = await inputView.readLineMessage(INPUT_MESSAGE.WINNING_NUMBERS);
+        const winningNumbers = parseLottoNumbers(input);
+        InputValidator.validateWinningNumbers(winningNumbers);
+        return winningNumbers;
+      } catch (error) {
+        outputView.printError(error.message);
+      }
+    }
   }
 
   async #inputBonusNumber() {
-    const input = await inputView.readLineMessage(INPUT_MESSAGE.BONUS_NUMBER);
-    const bonusNumber = InputValidator.validateBonusNumber(input);
-    return bonusNumber;
+    while (true) {
+      try {
+        const input = await inputView.readLineMessage(INPUT_MESSAGE.BONUS_NUMBER);
+        const bonusNumber = InputValidator.validateBonusNumber(input);
+        return bonusNumber;
+      } catch (error) {
+        outputView.printError(error.message);
+      }
+    }
   }
 
   #outputMessages(lottoMachine) {
