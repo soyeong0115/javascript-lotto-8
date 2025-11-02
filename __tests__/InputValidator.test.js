@@ -107,3 +107,49 @@ describe('당첨 번호 검증 테스트', () => {
     }).toThrow(ERROR_MESSAGE.INVALID_COUNT);
   });
 });
+
+describe('보너스 번호 검증 테스트', () => {
+  test('유효한 숫자 입력 시 올바르게 저장되는지 확인한다.', () => {
+    const input = '7';
+    expect(InputValidator.validateBonusNumber(input)).toBe(7);
+  });
+
+  test('입력값이 없을 시 예외가 발생한다.', () => {
+    const input = '';
+    expect(() => {
+      InputValidator.validateBonusNumber(input);
+    }).toThrow(ERROR_MESSAGE.EMPTY_INPUT);
+  });
+
+  test('공백 입력 시 예외가 발생한다.', () => {
+    const input = '  ';
+    expect(() => {
+      InputValidator.validateBonusNumber(input);
+    }).toThrow(ERROR_MESSAGE.EMPTY_INPUT);
+  });
+
+  test('숫자가 아닌 입력(문자, 기호) 시 예외가 발생한다.', () => {
+    const inputs = ['a', '!', '1a'];
+    inputs.forEach((input) => {
+      expect(() => {
+        InputValidator.validateBonusNumber(input);
+      }).toThrow(ERROR_MESSAGE.NOT_NUMBER);
+    });
+  });
+
+  test('소수 입력 시 예외가 발생한다.', () => {
+    const input = '3.5';
+    expect(() => {
+      InputValidator.validateBonusNumber(input);
+    }).toThrow(ERROR_MESSAGE.NOT_INTEGER);
+  });
+
+  test('1~45 범위를 벗어난 숫자 입력 시 예외가 발생한다.', () => {
+    const inputs = ['0', '46', '-1', '100'];
+    inputs.forEach((input) => {
+      expect(() => {
+        InputValidator.validateBonusNumber(input);
+      }).toThrow(ERROR_MESSAGE.OUT_OF_RANGE);
+    });
+  });
+});
