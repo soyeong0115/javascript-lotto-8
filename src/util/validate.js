@@ -35,5 +35,9 @@ export const validate = {
             num <= LOTTO_CONFIG.RANDOM_MAX;
 
         return numbers.every(isValidNumber);
+    },
+
+    isInRange(number) {
+        return number >= LOTTO_CONFIG.RANDOM_MIN && number <= LOTTO_CONFIG.RANDOM_MAX;
     }
 };

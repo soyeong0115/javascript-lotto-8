@@ -35,4 +35,23 @@ export const InputValidator = {
    
     return numbers;
   },
+
+  validateBonusNumber(input) {
+    if (validate.isEmpty(input)) {
+      throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
+    }   
+    if (!validate.isNumber(input)) {
+      throw new Error(ERROR_MESSAGE.NOT_NUMBER);
+    }
+    if (!validate.isInteger(input)) {
+      throw new Error(ERROR_MESSAGE.NOT_INTEGER);
+    }
+    const number = Number(input);
+
+    if (!validate.isInRange(number)) {
+      throw new Error(ERROR_MESSAGE.OUT_OF_RANGE);
+    }
+
+    return number;
+  }
 };
