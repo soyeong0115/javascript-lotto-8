@@ -12,14 +12,14 @@ describe('구입금액 검증 테스트', () => {
     const input = '5500';
     expect(() => {
       InputValidator.validatePurchaseAmount(input);
-    }).toThrow(ERROR_MESSAGE.NOT_MULTIPLE_UNIT);
+    }).toThrow(ERROR_MESSAGE.PURCHASE.NOT_MULTIPLE_UNIT);
   });
 
   test('입력값이 없을 시 예외가 발생한다.', () => {
     const input = '';
     expect(() => {
       InputValidator.validatePurchaseAmount(input);
-    }).toThrow(ERROR_MESSAGE.EMPTY_INPUT);
+    }).toThrow(ERROR_MESSAGE.PURCHASE.EMPTY_INPUT);
   });
 
   test('숫자가 아닌 입력(문자, 기호) 시 예외가 발생한다.', () => {
@@ -27,7 +27,7 @@ describe('구입금액 검증 테스트', () => {
     inputs.forEach((input) => {
       expect(() => {
         InputValidator.validatePurchaseAmount(input);
-      }).toThrow(ERROR_MESSAGE.NOT_NUMBER);
+      }).toThrow(ERROR_MESSAGE.PURCHASE.NOT_NUMBER);
     });
   });
 
@@ -35,7 +35,7 @@ describe('구입금액 검증 테스트', () => {
     const input = '1000.5';
     expect(() => {
       InputValidator.validatePurchaseAmount(input);
-    }).toThrow(ERROR_MESSAGE.NOT_INTEGER);
+    }).toThrow(ERROR_MESSAGE.PURCHASE.NOT_INTEGER);
   });
 
   test('음수 또는 0 입력 시 예외가 발생한다.', () => {
@@ -43,7 +43,7 @@ describe('구입금액 검증 테스트', () => {
     inputs.forEach((input) => {
       expect(() => {
         InputValidator.validatePurchaseAmount(input);
-      }).toThrow(ERROR_MESSAGE.NOT_POSITIVE);
+      }).toThrow(ERROR_MESSAGE.PURCHASE.NOT_POSITIVE);
     });
   });
 
@@ -51,7 +51,7 @@ describe('구입금액 검증 테스트', () => {
     const input = '   ';
     expect(() => {
       InputValidator.validatePurchaseAmount(input);
-    }).toThrow(ERROR_MESSAGE.EMPTY_INPUT);
+    }).toThrow(ERROR_MESSAGE.PURCHASE.EMPTY_INPUT);
   });
 });
 
@@ -62,7 +62,7 @@ describe('당첨 번호 검증 테스트', () => {
     const numbers = parseLottoNumbers(input);
     expect(() => {
       InputValidator.validateWinningNumbers(numbers);
-    }).toThrow(ERROR_MESSAGE.INVALID_COUNT);
+    }).toThrow(ERROR_MESSAGE.WINNING_NUMBERS.INVALID_COUNT);
   });
 
   test('6개가 아닌 번호 입력 시 예외가 발생한다.', () => {
@@ -70,7 +70,7 @@ describe('당첨 번호 검증 테스트', () => {
     const numbers = parseLottoNumbers(input);
     expect(() => {
       InputValidator.validateWinningNumbers(numbers);
-    }).toThrow(ERROR_MESSAGE.INVALID_COUNT);
+    }).toThrow(ERROR_MESSAGE.WINNING_NUMBERS.INVALID_COUNT);
   });
 
   test('1~45 범위를 벗어난 숫자 입력 시 예외가 발생한다.', () => {
@@ -78,7 +78,7 @@ describe('당첨 번호 검증 테스트', () => {
     const numbers = parseLottoNumbers(input);
     expect(() => {
       InputValidator.validateWinningNumbers(numbers);
-    }).toThrow(ERROR_MESSAGE.OUT_OF_RANGE);
+    }).toThrow(ERROR_MESSAGE.WINNING_NUMBERS.OUT_OF_RANGE);
   });
 
   test('중복된 숫자 입력 시 예외가 발생한다.', () => {
@@ -86,7 +86,7 @@ describe('당첨 번호 검증 테스트', () => {
     const numbers = parseLottoNumbers(input);
     expect(() => {
       InputValidator.validateWinningNumbers(numbers);
-    }).toThrow(ERROR_MESSAGE.DUPLICATE_NUMBER);
+    }).toThrow(ERROR_MESSAGE.WINNING_NUMBERS.DUPLICATE_NUMBER);
   });
 
   test('문자, 기호, 소수, 음수 입력 시 예외가 발생한다.', () => {
@@ -95,7 +95,7 @@ describe('당첨 번호 검증 테스트', () => {
       const numbers = parseLottoNumbers(input);
       expect(() => {
         InputValidator.validateWinningNumbers(numbers);
-      }).toThrow(ERROR_MESSAGE.OUT_OF_RANGE);
+      }).toThrow(ERROR_MESSAGE.WINNING_NUMBERS.OUT_OF_RANGE);
     });
   });
 
@@ -104,28 +104,29 @@ describe('당첨 번호 검증 테스트', () => {
     const numbers = parseLottoNumbers(input);
     expect(() => {
       InputValidator.validateWinningNumbers(numbers);
-    }).toThrow(ERROR_MESSAGE.INVALID_COUNT);
+    }).toThrow(ERROR_MESSAGE.WINNING_NUMBERS.INVALID_COUNT);
   });
 });
 
 describe('보너스 번호 검증 테스트', () => {
   test('유효한 숫자 입력 시 올바르게 저장되는지 확인한다.', () => {
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
     const input = '7';
-    expect(InputValidator.validateBonusNumber(input)).toBe(7);
+    expect(InputValidator.validateBonusNumber(input, winningNumbers)).toBe(7);
   });
 
   test('입력값이 없을 시 예외가 발생한다.', () => {
     const input = '';
     expect(() => {
       InputValidator.validateBonusNumber(input);
-    }).toThrow(ERROR_MESSAGE.EMPTY_INPUT);
+    }).toThrow(ERROR_MESSAGE.BONUS.EMPTY_INPUT);
   });
 
   test('공백 입력 시 예외가 발생한다.', () => {
     const input = '  ';
     expect(() => {
       InputValidator.validateBonusNumber(input);
-    }).toThrow(ERROR_MESSAGE.EMPTY_INPUT);
+    }).toThrow(ERROR_MESSAGE.BONUS.EMPTY_INPUT);
   });
 
   test('숫자가 아닌 입력(문자, 기호) 시 예외가 발생한다.', () => {
@@ -133,7 +134,7 @@ describe('보너스 번호 검증 테스트', () => {
     inputs.forEach((input) => {
       expect(() => {
         InputValidator.validateBonusNumber(input);
-      }).toThrow(ERROR_MESSAGE.NOT_NUMBER);
+      }).toThrow(ERROR_MESSAGE.BONUS.NOT_NUMBER);
     });
   });
 
@@ -141,7 +142,7 @@ describe('보너스 번호 검증 테스트', () => {
     const input = '3.5';
     expect(() => {
       InputValidator.validateBonusNumber(input);
-    }).toThrow(ERROR_MESSAGE.NOT_INTEGER);
+    }).toThrow(ERROR_MESSAGE.BONUS.NOT_INTEGER);
   });
 
   test('1~45 범위를 벗어난 숫자 입력 시 예외가 발생한다.', () => {
@@ -149,7 +150,15 @@ describe('보너스 번호 검증 테스트', () => {
     inputs.forEach((input) => {
       expect(() => {
         InputValidator.validateBonusNumber(input);
-      }).toThrow(ERROR_MESSAGE.OUT_OF_RANGE);
+      }).toThrow(ERROR_MESSAGE.BONUS.OUT_OF_RANGE);
     });
+  });
+
+  test('당첨 번호와 중복되는 보너스 번호 입력 시 예외가 발생한다.', () => {
+    const winningNumbers = [1, 2, 3, 4, 5, 6];
+    const input = '3';
+    expect(() => {
+      InputValidator.validateBonusNumber(input, winningNumbers);
+    }).toThrow(ERROR_MESSAGE.BONUS.DUPLICATE_WITH_WINNING);
   });
 });
