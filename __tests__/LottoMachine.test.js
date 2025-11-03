@@ -30,7 +30,7 @@ describe('LottoMachine 테스트', () => {
     lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 4, 5, 6]);
 
     const result = lottoMachine.calculateResult([1, 2, 3, 7, 8, 9], 10);
-    expect(result.FIFTH).toBe(1); // 3개 일치
+    expect(result.FIFTH).toBe(1);
   });
 
   test('5개 번호 일치 + 보너스 번호 포함 시 2등으로 계산된다.', () => {
@@ -38,7 +38,6 @@ describe('LottoMachine 테스트', () => {
     const winningNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 7;
 
-    // 5개 번호 일치 + 보너스 번호 포함
     lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 4, 5, 7]);
 
     const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
@@ -50,11 +49,11 @@ describe('LottoMachine 테스트', () => {
     const winningNumbers = [1, 2, 3, 4, 5, 6];
     const bonusNumber = 7;
 
-    lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 4, 5, 6]); // 1등
-    lottoMachine.getLottos()[1] = new Lotto([1, 2, 3, 4, 5, 7]); // 2등
-    lottoMachine.getLottos()[2] = new Lotto([1, 2, 3, 4, 5, 8]); // 3등
-    lottoMachine.getLottos()[3] = new Lotto([1, 2, 3, 4, 9, 10]); // 4등
-    lottoMachine.getLottos()[4] = new Lotto([1, 2, 3, 7, 8, 9]); // 5등
+    lottoMachine.getLottos()[0] = new Lotto([1, 2, 3, 4, 5, 6]); 
+    lottoMachine.getLottos()[1] = new Lotto([1, 2, 3, 4, 5, 7]); 
+    lottoMachine.getLottos()[2] = new Lotto([1, 2, 3, 4, 5, 8]); 
+    lottoMachine.getLottos()[3] = new Lotto([1, 2, 3, 4, 9, 10]);
+    lottoMachine.getLottos()[4] = new Lotto([1, 2, 3, 7, 8, 9]);
 
     const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
     expect(result.FIRST).toBe(1);

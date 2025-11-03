@@ -30,6 +30,4 @@ describe("로또 클래스 테스트", () => {
     expect(() => new Lotto([1, 2, 3, 4, 5, 46])).toThrow(ERROR_MESSAGE.OUT_OF_RANGE);
     expect(() => new Lotto([-1, 2, 3, 4, 5, 46])).toThrow(ERROR_MESSAGE.OUT_OF_RANGE);
   });
-
-  // TODO: 추가 기능 구현에 따른 테스트 코드 작성
 });
