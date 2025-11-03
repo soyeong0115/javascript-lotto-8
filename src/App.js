@@ -13,7 +13,7 @@ class App {
 
     const winningNumbers = await this.#inputWinningNumbers();
 
-    const bonusNumber = await this.#inputBonusNumber();
+    const bonusNumber = await this.#inputBonusNumber(winningNumbers);
 
     const result = lottoMachine.calculateResult(winningNumbers, bonusNumber);
     const yieldRate = lottoMachine.calculateYield(result);
@@ -45,11 +45,11 @@ class App {
     }
   }
 
-  async #inputBonusNumber() {
+  async #inputBonusNumber(winningNumbers) {
     while (true) {
       try {
         const input = await inputView.readLineMessage(INPUT_MESSAGE.BONUS_NUMBER);
-        const bonusNumber = InputValidator.validateBonusNumber(input);
+        const bonusNumber = InputValidator.validateBonusNumber(input, winningNumbers);
         return bonusNumber;
       } catch (error) {
         outputView.printError(error.message);

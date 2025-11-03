@@ -4,19 +4,19 @@ import { validate } from '../../util/validate.js';
 export const InputValidator = {
   validatePurchaseAmount(input) {
     if (validate.isEmpty(input)) {
-      throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
+      throw new Error(ERROR_MESSAGE.PURCHASE.EMPTY_INPUT);
     }    
     if (!validate.isNumber(input)) {
-      throw new Error(ERROR_MESSAGE.NOT_NUMBER);
+      throw new Error(ERROR_MESSAGE.PURCHASE.NOT_NUMBER);
     }
     if (!validate.isInteger(input)) {
-      throw new Error(ERROR_MESSAGE.NOT_INTEGER);
+      throw new Error(ERROR_MESSAGE.PURCHASE.NOT_INTEGER);
     }
     if (!validate.isPositiveNumber(input)) {
-      throw new Error(ERROR_MESSAGE.NOT_POSITIVE);
+      throw new Error(ERROR_MESSAGE.PURCHASE.NOT_POSITIVE);
     }
     if (Number(input) % 1000 !== 0) {
-      throw new Error(ERROR_MESSAGE.NOT_MULTIPLE_UNIT);
+      throw new Error(ERROR_MESSAGE.PURCHASE.NOT_MULTIPLE_UNIT);
     }
 
     return input;
@@ -24,32 +24,35 @@ export const InputValidator = {
 
   validateWinningNumbers(numbers) {
      if (!validate.hasValidCount(numbers)) {
-      throw new Error(ERROR_MESSAGE.INVALID_COUNT);
+      throw new Error(ERROR_MESSAGE.WINNING_NUMBERS.INVALID_COUNT);
     }
     if (!validate.areNumbersInRange(numbers)) {
-      throw new Error(ERROR_MESSAGE.OUT_OF_RANGE);
+      throw new Error(ERROR_MESSAGE.WINNING_NUMBERS.OUT_OF_RANGE);
     }
     if (validate.hasDuplicate(numbers)) {
-      throw new Error(ERROR_MESSAGE.DUPLICATE_NUMBER);
+      throw new Error(ERROR_MESSAGE.WINNING_NUMBERS.DUPLICATE_NUMBER);
     }
    
     return numbers;
   },
 
-  validateBonusNumber(input) {
+  validateBonusNumber(input, winningNumbers) {
     if (validate.isEmpty(input)) {
-      throw new Error(ERROR_MESSAGE.EMPTY_INPUT);
+      throw new Error(ERROR_MESSAGE.BONUS.EMPTY_INPUT);
     }   
     if (!validate.isNumber(input)) {
-      throw new Error(ERROR_MESSAGE.NOT_NUMBER);
+      throw new Error(ERROR_MESSAGE.BONUS.NOT_NUMBER);
     }
     if (!validate.isInteger(input)) {
-      throw new Error(ERROR_MESSAGE.NOT_INTEGER);
+      throw new Error(ERROR_MESSAGE.BONUS.NOT_INTEGER);
     }
     const number = Number(input);
 
     if (!validate.isInRange(number)) {
-      throw new Error(ERROR_MESSAGE.OUT_OF_RANGE);
+      throw new Error(ERROR_MESSAGE.BONUS.OUT_OF_RANGE);
+    }
+    if (winningNumbers.includes(number)) {
+      throw new Error(ERROR_MESSAGE.BONUS.DUPLICATE_WITH_WINNING);
     }
 
     return number;
