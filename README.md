@@ -125,3 +125,91 @@
 ### 8. 에러 메시지 출력 후 재입력 받기
 - [x] 사용자가 잘못된 값을 입력할 경우 [ERROR]로 시작하는 메시지를 출력
 - [x] 해당 입력 단계부터 다시 입력 받기
+<br>
+
+---
+## 🧱 MVC 구조 설계
+역할 분리와 유지보수성 강화를 위해 MVC 패턴 적용
+
+### Model
+- `Lotto.js` : 개별 로또 번호 관리 및 관련 로직
+- `LottoMachine.js` : 로또 구매, 발행, 당첨 번호 비교, 수익률 계산 등 게임 전체 상테 관리
+
+### View
+- `validator/InputValidator.js` : 사용자 입력값 검증 (구입 금액, 당첨 번호, 보너스 번호)
+- `InputView.js` : 사용자 입력 안내 및 입력받기
+- `OutputView.js` : 로또 발행 결과, 당첨 내역, 수익률 출력
+
+### Controller
+- `App.js` : 게임 진행 흐름 제어, Model과 View 연결
+
+### util
+- `parser.js` : 입력 문자열 파싱
+- `random.js` : 랜덤 로또 번호 생성
+- `validate.js` : 숫자, 범위, 정수 등 일반 검증 유틸
+
+### constant
+- `lotto.js` : 로또 가격, 당첨금 등 로또와 관련된 상수
+- `message.js` : 입력 안내 메시지, 출력 메시지, 에러 메시지 관련 상수
+<br>
+
+---
+ 
+## 📁 파일 구조
+```plaintext
+javascript-lotto-8
+├─ __tests__
+│  ├─ ApplicationTest.js
+│  ├─ InputValidator.test.js
+│  ├─ LottoMachine.test.js
+│  ├─ LottoTest.js
+│  └─ parser.test.js
+│
+├─ src
+│  ├─ constants
+│  │  ├─ lotto.js
+│  │  └─ message.js
+│  │
+│  ├─ model
+│  │  ├─ Lotto.js
+│  │  └─ LottoMachine.js
+│  │
+│  ├─ util
+│  │  ├─ parser.js
+│  │  ├─ random.js
+│  │  └─ validate.js
+│  │
+│  ├─ view
+│  │  ├─ validator
+│  │  │  └─ InputValidator.js
+│  │  │
+│  │  ├─ InputView.js
+│  │  └─ OutputView.js
+│  │
+│  ├─ App.js
+│  └─ index.js
+│
+├─ package.json
+└─ README.md
+```
+
+---
+
+## 🔮 테스트 (Jest)
+구현한 기능에 대한 단위 테스트 작성
+<br>
+*단, UI(System.out, System.in, Scanner) 로직은 제외
+
+| 테스트 파일 | 테스트 내용 |
+|-------------|------------|
+| `InputValidator.test.js` | 구입 금액, 당첨 번호, 보너스 번호 입력 검증 및 예외 처리 테스트 |
+| `LottoMachine.test.js` | 로또 구매, 발행, 당첨 번호 비교, 수익률 계산 테스트 |
+| `LottoTest.js` | 로또 객체 관련 테스트 |
+| `parser.test.js` | 입력 문자열 파싱 테스트 |
+
+---
+## 💡 새롭게 도전한 부분
+### **TDD 기반 구현**  
+   - 전체 개발 후 테스트 작성 X
+   - 기능 정의 → 예외 상황 정의 → 검증 테스트 작성 → 실제 코드 구현 순으로 진행
+   - 각 모듈별 단위 테스트를 통해 안정성 확보 (작은 단위의 테스트 구현)
