@@ -1,7 +1,7 @@
 import { INPUT_MESSAGE } from "./constant/message.js";
 import LottoMachine from "./model/LottoMachine.js";
-import inputView from "./view/inputView.js";
-import outputView from "./view/outputView.js";
+import inputView from "./view/InputView.js";
+import outputView from "./view/OutputView.js";
 import { InputValidator } from "./view/validator/InputValidator.js";
 import { parseLottoNumbers } from "./util/parser.js";
 
